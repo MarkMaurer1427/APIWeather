@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
+using System.IO;
 using System.Net.Http;
 
 namespace APIWeather
@@ -8,13 +9,13 @@ namespace APIWeather
     {
         static void Main(string[] args)
         {
-            var SATX = new CityWeather(4726206);
-            SATX.PrintInfo();
+            JObject o1 = JObject.Parse(File.ReadAllText(@"apikey.json"));
+            JObject o2 = JObject.Parse(File.ReadAllText(@"cityIDs.json"));
 
-            Console.WriteLine();
+            string key = o1["apikey"].ToString();
+            var parser = new CityParser(key);
+            parser.ParseObjects(o2);
 
-            var Birmingham = new CityWeather(4049979);
-            Birmingham.PrintInfo();
 
 
 
